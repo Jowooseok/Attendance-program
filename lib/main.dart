@@ -11,17 +11,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('헬로 월드'),
-        ),
-          body: Text('헬로 월드',
-          style: TextStyle(fontSize: 30),))
+      home: HelloWooseok('Hello World')
     );
   }
 }
 
 class HelloWooseok extends StatefulWidget {
+  final String title;
+
+  HelloWooseok(this.title);
+
   @override
   _HelloWooseokState createState() => _HelloWooseokState();
 }
@@ -29,7 +28,11 @@ class HelloWooseok extends StatefulWidget {
 class _HelloWooseokState extends State<HelloWooseok> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+        body : Text(widget.title,  style: TextStyle(fontSize: 30),));
   }
 }
 
