@@ -27,6 +27,7 @@ class HelloWooseok extends StatefulWidget {
 
 class _HelloWooseokState extends State<HelloWooseok> {
   String _message = "Hello World";
+  int _counter = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +38,21 @@ class _HelloWooseokState extends State<HelloWooseok> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-        body : Text(_message,  style: TextStyle(fontSize: 30),));
+        body : Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+            Text('$_counter',  style: TextStyle(fontSize: 30)),
+
+            ],
+          ),
+        ));
   }
 
   void _changeMessage() {
     setState(() {
       _message = "헬로 월드";
+      _counter++;
     });
   }
 }
