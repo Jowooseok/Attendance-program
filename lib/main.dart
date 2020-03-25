@@ -1,60 +1,60 @@
 import 'package:flutter/material.dart';
+import 'package:english_words/english_words.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final wordPair = WordPair.random();
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: HelloWooseok('Hello World')
+      title: 'Startup Name Generator',
+      home: RandomWords(),
     );
   }
 }
 
-class HelloWooseok extends StatefulWidget {
-  final String title;
+class RandomWordsState extends State<RandomWords> {
 
-  HelloWooseok(this.title);
+  final _suggestions = <WordPair>[];
+  final _biggerFont = const TextStyle(fontSize: 18.0);
 
-  @override
-  _HelloWooseokState createState() => _HelloWooseokState();
-}
-
-class _HelloWooseokState extends State<HelloWooseok> {
-  String _message = "Hello World";
-  int _counter = 0;
-
+  // TODO Add build() method
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: _changeMessage),
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text('Startup Name Generator'),
       ),
-        body : Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-            Text('$_counter',  style: TextStyle(fontSize: 30)),
-
-            ],
-          ),
-        ));
+      body: _buildSuggestions(),
+    );
   }
 
-  void _changeMessage() {
-    setState(() {
-      _message = "헬로 월드";
-      _counter++;
-    });
+  Widget _buildSuggestions() {
+    return ListView.builder(
+        padding: const EdgeInsets.all(16.0),
+        itemBuilder: /*1*/ (context, i) {
+          if (i.isOdd) return Divider(); /*2*/
+
+          final index = i ~/ 2; /*3*/
+          if (index >= _suggestions.length) {
+            _suggestions.addAll(generateWordPairs().take(10)); /*4*/
+          }
+          return _buildRow(_suggestions[index]);
+        });
+  }
+
+  Widget _buildRow(WordPair pair) {
+    return ListTile(
+      title: Text(
+        pair.asPascalCase,
+        style: _biggerFont,
+      ),
+    );
   }
 }
 
-
+class RandomWords extends StatefulWidget {
+  @override
+  RandomWordsState createState() => RandomWordsState();
+}
